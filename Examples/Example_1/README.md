@@ -13,7 +13,7 @@
 - Автоматическая сборка и деплой проектов
 - Лучшие практики работы с Maven и Gradle
 
-[Директория лекции](https://github.com/MikhailAkulov/Java_Junior/tree/main/src/main/java/ru/gb/examples/Example_1/Lecture)
+[Директория лекции](https://github.com/MikhailAkulov/Spring_Framework/tree/main/Examples/Example_1/Lecture/)
 
 ## На семинаре:
 
@@ -21,7 +21,7 @@
 - Настройка зависимостей проекта и управление версиями библиотек.
 - Создание сборки проекта, включая компиляцию, тестирование и пакетирование.
 
-[Директория семинара](https://github.com/MikhailAkulov/Java_Junior/tree/main/src/main/java/ru/gb/examples/Example_1/Seminar)
+[Директория семинара](https://github.com/MikhailAkulov/Spring_Framework/tree/main/Examples/Example_1/Seminar)
 
 ## Задания:
 
@@ -30,4 +30,4 @@
 3. Выполнить команду по выполнению сборки.
 4. Сделать скриншот результатов сборки и прислать в качестве ДЗ.
 
-[Директория задания](https://github.com/MikhailAkulov/Java_Junior/blob/main/src/main/java/ru/gb/examples/Example_1/Tasks/Task_2.java)
+[Директория задания](https://github.com/MikhailAkulov/Spring_Framework/tree/main/Examples/Example_1/Tasks)
