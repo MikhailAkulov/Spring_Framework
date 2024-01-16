@@ -2,9 +2,11 @@ package ru.gb;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.util.List;
 
 //@Controller
@@ -82,4 +84,14 @@ public class StudentController {
         return existStudent;
     }   // http://localhost:8180/students/students/1  - запрос в postman (raw/Json)
         // http://localhost:8180/students/1 - проверка в браузере, что запрос сработал
+
+    /**
+     * Для примера MediaType
+     */
+    @GetMapping(value = "/test", produces = MediaType.TEXT_HTML_VALUE)
+    public String test() {
+        return """
+                <h1>Title</h1>
+                """;
+    }
 }
