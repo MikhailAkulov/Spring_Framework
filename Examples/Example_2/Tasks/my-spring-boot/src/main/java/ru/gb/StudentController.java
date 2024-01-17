@@ -1,97 +1,76 @@
 package ru.gb;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
 import java.util.List;
 
-//@Controller
+/**
+ * 3. Создать контроллер, обрабатывающий входящие запросы:
+ */
 @RestController
-@RequestMapping("/students")
-//@RequiredArgsConstructor // если конструктор один, то очень упрощает работу
+@RequestMapping("/student")
 public class StudentController {
 
-    // REST
-    // GET /students/{id} => 404 (Not Found)
-    // GET /students?nameLike='Igor%' => 204 (No Content)
-
-    // DELETE /students/{id} - удаляет
-    // POST   /students/      {"id": "1", "name": "newName"} - создает
-    // PUT    /students/{id}  {"id": "1", "name": "newName"} - изменение
-
-    // HTTP HyperText Transfer Protocol
-    // GET POST PUT PATCH DELETE ... HEAD OPTIONS
-
-    // http://ip-address/students/all -> List<Students>
-    // http://ip-address/students/1 -> Student(1, Student #1)
-
-//    @Autowired // 3-й способ через анностацию (без конструктора и сеттеров, спринг всё сделает сам)
     private final StudentRepository repository;
 
-    // Внедрение через сеттеры
-//    @Autowired
-//    public void setRepository(StudentRepository repository) {
-//        this.repository = repository;
-//    }
-
-    // Внедрение через конструктор (оптимальный способ)
     @Autowired
     public StudentController(StudentRepository repository) {
-//        repository = new StudentRepository();
         this.repository = repository;
     }
 
     /**
-     * http://ip-address/students/all -> List<Students>
+     * 3.2 GET /student - получить всех студентов
+     * http://localhost:8180/student
      */
-//    @RequestMapping(path = "/students", method = RequestMethod.GET)
-    @GetMapping(path = "all")
-//    @GetMapping(path = "students") // то же что и @RequestMapping, но записывается короче
-//    @ResponseBody // аннотация необходима, если у класса указана аннотация @Controller
+    @GetMapping()
     public List<Student> getStudents() {
-//        return List.of(new Student("Student #1"), new Student("unknown"));
         return repository.getAll();
     }
 
     /**
-     * http://ip-address/students/1 -> Student(1, Student #1)
+     * 3.1 GET /student/{id} - получить студента по ID
+     * http://localhost:8180/student/8
      */
     @GetMapping("/{id}")
-//    public Student getStudent(@PathVariable("id") long studentId) {
-    public Student getStudent(@PathVariable long id) {
+    public Student getStudentById(@PathVariable long id) {
         return repository.getById(id);
     }
 
     /**
-     * http://ip-address/students?name = Student #1 -> Student(1, Student #1)
+     * 3.3 GET /student/search?name='studentName' - получить список студентов, чье имя содержит подстроку studentName
+     * http://localhost:8180/student/search?name=Student7
      */
-    @GetMapping
+    @GetMapping("/search")
     public Student getStudentByName(@RequestParam String name) {
         return repository.getByName(name);
     }
 
-    @PutMapping("/students/{id}")
-    public Student updateStudent (@PathVariable long id, @RequestBody Student student) {
-        Student existStudent = repository.getById(id);  // так делать нехорошо
-        if (existStudent == null) { //404
-            throw new IllegalArgumentException();
-        }
-        existStudent.setName(student.getName());
-        return existStudent;
-    }   // http://localhost:8180/students/students/1  - запрос в postman (raw/Json)
-        // http://localhost:8180/students/1 - проверка в браузере, что запрос сработал
+    /**
+     * 3.5 POST /student - создать студента (принимает JSON) (отладиться можно с помощью Postman)
+     * http://localhost:8180/student/add
+     * {
+     *     "id": "10",
+     *     "name": "newStudent",
+     *     "groupName": "group4"
+     * }
+     */
+    @PostMapping("/add")
+    public Student addNewStudent(@RequestBody Student student) {
+        repository.addStudent(student);
+        return student;
+    }
 
     /**
-     * Для примера MediaType
+     * 3.6 DELETE /student/{id} - удалить студента
+     * http://localhost:8180/student/10
      */
-    @GetMapping(value = "/test", produces = MediaType.TEXT_HTML_VALUE)
-    public String test() {
-        return """
-                <h1>Title</h1>
-                """;
+    @DeleteMapping("/{id}")
+    public boolean deleteStudent(@PathVariable long id) {
+        if (repository.getById(id) == null) {
+            throw new IllegalArgumentException();
+        }
+        repository.deleteStudentById(id);
+        return true;
     }
 }
