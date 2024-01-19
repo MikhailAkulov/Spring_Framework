@@ -20,8 +20,14 @@ public class ReaderRepository {
     @PostConstruct
     public void generateData() {
         readers.addAll(List.of(
-                new Reader("Читатель1")
+                new Reader("Читатель1"),
+                new Reader("Читатель2"),
+                new Reader("Читатель3")
         ));
+    }
+
+    public List<Reader> getAll() {
+        return List.copyOf(readers);
     }
 
     public Reader getReaderById(long id) {
@@ -29,5 +35,16 @@ public class ReaderRepository {
                 .filter(it -> Objects.equals(it.getId(), id))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public void addReader(Reader reader) {
+        readers.add(reader);
+    }
+
+    public void deleteReaderById(long id) {
+        readers.stream()
+                .filter(it -> Objects.equals(it.getId(), id))
+                .findFirst()
+                .ifPresent(readers::remove);
     }
 }

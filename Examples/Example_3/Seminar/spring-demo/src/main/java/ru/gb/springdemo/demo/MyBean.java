@@ -31,8 +31,8 @@ public class MyBean {
   }
 
   @EventListener(DatabaseConnectionSetupEvent.class)
-  public void onDatabaseConenctionSetup() {
-    log.info("onDatabaseConenctionSetup");
+  public void onDatabaseConnectionSetup() {
+    log.info("onDatabaseConnectionSetup");
 
     log.info("property = {}", myProperty);
   }
@@ -41,5 +41,4 @@ public class MyBean {
   public void preDestroy() {
     log.info("preDestroy");
   }
-
 }

@@ -27,7 +27,7 @@ public class DatabaseConnector {
   }
 
   // init-method
-  @SneakyThrows
+  @SneakyThrows // лучше не применять
   @EventListener(ApplicationReadyEvent.class)
   public void init() {
     log.info("подключаемся к бд...");
@@ -36,5 +36,4 @@ public class DatabaseConnector {
 
     eventPublisher.publishEvent(new DatabaseConnectionSetupEvent(this));
   }
-
 }

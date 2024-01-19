@@ -14,5 +14,4 @@ public class TestController {
     System.out.println(resourceName);
     return "ok";
   }
-
 }

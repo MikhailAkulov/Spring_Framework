@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.myspringdemo.model.Issue;
+import ru.gb.myspringdemo.repository.IssueRepository;
 import ru.gb.myspringdemo.service.IssueService;
 
 import java.util.NoSuchElementException;
@@ -14,6 +15,13 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/issue")
 public class IssueController {
+
+    private final IssueRepository issueRepository;
+
+    @Autowired
+    public IssueController(IssueRepository issueRepository) {
+        this.issueRepository = issueRepository;
+    }
 
     @Autowired
     private IssueService service;
@@ -30,6 +38,12 @@ public class IssueController {
         }
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(issue);
+    }
+
+    //  GET /issue/{id} - получить описание факта выдачи
+    @GetMapping("/{id}")
+    public Issue getIssueById(@PathVariable long id) {
+        return issueRepository.getIssueById(id);
     }
 
 }

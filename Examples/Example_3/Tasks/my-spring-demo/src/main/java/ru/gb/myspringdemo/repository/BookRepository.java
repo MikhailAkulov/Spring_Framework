@@ -21,9 +21,13 @@ public class BookRepository {
     public void generateData() {
         books.addAll(List.of(
                 new Book("война и мир"),
-                new Book("метрвые души"),
+                new Book("мертвые души"),
                 new Book("чистый код")
         ));
+    }
+
+    public List<Book> getAll() {
+        return List.copyOf(books);
     }
 
     public Book getBookById(long id) {
@@ -31,5 +35,16 @@ public class BookRepository {
                 .filter(it -> Objects.equals(it.getId(), id))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
+    }
+
+    public void deleteBookById(long id) {
+        books.stream()
+                .filter(it -> Objects.equals(it.getId(), id))
+                .findFirst()
+                .ifPresent(books::remove);
     }
 }
