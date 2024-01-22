@@ -16,13 +16,6 @@ import java.util.NoSuchElementException;
 @RequestMapping("/issue")
 public class IssueController {
 
-    private final IssueRepository issueRepository;
-
-    @Autowired
-    public IssueController(IssueRepository issueRepository) {
-        this.issueRepository = issueRepository;
-    }
-
     @Autowired
     private IssueService service;
 
@@ -41,9 +34,9 @@ public class IssueController {
     }
 
     //  GET /issue/{id} - получить описание факта выдачи
-    @GetMapping("/{id}")
-    public Issue getIssueById(@PathVariable long id) {
-        return issueRepository.getIssueById(id);
-    }
+//    @GetMapping("/{id}")
+//    public Issue getIssueById(@PathVariable long id) {
+//        return issueRepository.getIssueById(id);
+//    }
 
 }

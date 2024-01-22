@@ -18,7 +18,7 @@ public class ReaderController {
         this.readerRepository = readerRepository;
     }
 
-    // GET  /book - получить список всех читателей
+    // GET  /reader - получить список всех читателей
     @GetMapping()
     public List<Reader> getReaders() {
         return readerRepository.getAll();
@@ -41,6 +41,10 @@ public class ReaderController {
     }
 
     //  POST /reader - создать читателя
+    //  {
+    //    "id": 4,
+    //    "name": "Читатель4"
+    //  }
     @PostMapping("/add")
     public Reader addNewReader(@RequestBody Reader reader) {
         readerRepository.addReader(reader);

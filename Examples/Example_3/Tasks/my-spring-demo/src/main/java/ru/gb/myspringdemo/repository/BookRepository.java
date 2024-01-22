@@ -26,9 +26,9 @@ public class BookRepository {
         ));
     }
 
-    public List<Book> getAll() {
-        return List.copyOf(books);
-    }
+//    public List<Book> getAll() {
+//        return List.copyOf(books);
+//    }
 
     public Book getBookById(long id) {
         return books.stream()
@@ -37,14 +37,18 @@ public class BookRepository {
                 .orElse(null);
     }
 
+    public Book getBookByName(String name) {
+        return books.stream()
+                .filter(it -> Objects.equals(it.getName(), name))
+                .findFirst()
+                .orElse(null);
+    }
+
     public void addBook(Book book) {
         books.add(book);
     }
 
-    public void deleteBookById(long id) {
-        books.stream()
-                .filter(it -> Objects.equals(it.getId(), id))
-                .findFirst()
-                .ifPresent(books::remove);
+    public void deleteBook(Book book) {
+        books.remove(book);
     }
 }
