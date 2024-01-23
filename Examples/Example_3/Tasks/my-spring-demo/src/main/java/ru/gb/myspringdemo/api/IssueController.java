@@ -57,13 +57,6 @@ public class IssueController {
         return new ResponseEntity<>(service.showAllIssues(), HttpStatus.OK);
     }
 
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Issue> deleteIssue(@PathVariable long id) {
-//
-//        final Issue issue;
-//
-//    }
-
     //  PUT /issue/{issueId} - закрывает факт выдачи.
     @PutMapping("/{issueId}")
     public ResponseEntity<Issue> returnBook(@PathVariable long issueId) {
