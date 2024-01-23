@@ -19,11 +19,6 @@ public class IssueController {
     @Autowired
     private IssueService service;
 
-//    @PutMapping
-//    public void returnBook(long issueId) {
-//        // найти в репозитории выдачу и проставить ей returned_at
-//    }
-
     @PostMapping
     public ResponseEntity<Issue> issueBook(@RequestBody IssueRequest request) {
         log.info("Получен запрос на выдачу: readerId = {}, bookId = {}", request.getReaderId(), request.getBookId());
@@ -43,7 +38,7 @@ public class IssueController {
     //  GET /issue/{id} - получить описание факта выдачи
     @GetMapping("/{id}")
     public ResponseEntity<Issue> getIssueInfo(@PathVariable long id) {
-        log.info("Получен запрос на описание факта выдачи: Id = {}", id);
+        log.info("Получен запрос на описание факта выдачи: id = {}", id);
 
         final Issue issue;
         try {
@@ -57,8 +52,30 @@ public class IssueController {
 
     @GetMapping("/all")
     public ResponseEntity<List<Issue>> getAllIssues() {
-        log.info("Получен запрос актуального списка выдач книг");
+        log.info("Получен запрос актуального списка всех выдач книг");
 
         return new ResponseEntity<>(service.showAllIssues(), HttpStatus.OK);
+    }
+
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Issue> deleteIssue(@PathVariable long id) {
+//
+//        final Issue issue;
+//
+//    }
+
+    //  PUT /issue/{issueId} - закрывает факт выдачи.
+    @PutMapping("/{issueId}")
+    public ResponseEntity<Issue> returnBook(@PathVariable long issueId) {
+        log.info("Получен запрос на возврат книги по выдаче с id = {}", issueId);
+
+        final Issue issue;
+        try {
+            issue = service.returnBook(issueId);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(issue);
+
     }
 }

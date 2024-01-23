@@ -30,4 +30,19 @@ public class IssueRepository {
     public List<Issue> showIssueList() {
         return List.copyOf(issues);
     }
+
+    public void checkIssueStatus(Issue newIssueStatus) {
+        Issue oldIssueStatus = issues.stream()
+                .filter(it -> Objects.equals(it.getId(), newIssueStatus.getId()))
+                .findFirst()
+                .orElse(null);
+        if (oldIssueStatus != null) {
+            int index = issues.indexOf(oldIssueStatus);
+            issues.set(index, newIssueStatus);
+        }
+    }
+
+    public void deleteIssue(Issue issue) {
+        issues.remove(issue);
+    }
 }

@@ -20,7 +20,7 @@ public class ReaderController {
 
     @Autowired
     private ReaderService readerService;
-    private final IssueService issueService;
+    private IssueService issueService;
 
     public ReaderController(IssueService issueService) {
         this.issueService = issueService;

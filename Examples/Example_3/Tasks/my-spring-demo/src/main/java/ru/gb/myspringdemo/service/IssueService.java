@@ -9,6 +9,7 @@ import ru.gb.myspringdemo.repository.BookRepository;
 import ru.gb.myspringdemo.repository.IssueRepository;
 import ru.gb.myspringdemo.repository.ReaderRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -34,7 +35,7 @@ public class IssueService {
         // проверить, что у читателя нет книг на руках (или его лимит не превышает в Х книг)
         long readerBooksAmount = issueRepository.showIssueList().stream()
                 .filter(it -> it.getReaderId() == request.getReaderId())
-                .count();
+                .count()+1;
         if (readerBooksAmount > booksLimit) {
             throw new RuntimeException("Максимально разрешенное количество книг на руках у читателя с id: \"" + request.getReaderId() + "\"");
         }
@@ -64,6 +65,25 @@ public class IssueService {
             throw new NoSuchElementException("Не найдены выдачи книг читателю с id: \"" + id + "\"");
         }
         return allIssuesList;
+    }
+
+    public Issue returnBook(long id) {
+        Issue issue = issueRepository.getIssueById(id);
+        if (issue == null) {
+            throw new NoSuchElementException("Не найдена выдача id: \"" + id + "\"");
+        }
+        issue.setReturned_at(LocalDateTime.now());
+        issueRepository.checkIssueStatus(issue);
+        deleteIssue(id);
+        return issue;
+    }
+
+    public void deleteIssue(long id) {
+        Issue issue = issueRepository.getIssueById(id);
+        if (issue == null) {
+            throw new NoSuchElementException("Не найдена выдача id: \"" + id + "\"");
+        }
+        issueRepository.deleteIssue(issue);
     }
 
     public List<Issue> showAllIssues() {

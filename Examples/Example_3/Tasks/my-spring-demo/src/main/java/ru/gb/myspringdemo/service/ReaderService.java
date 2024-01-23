@@ -31,7 +31,7 @@ public class ReaderService {
     public Reader showReaderInfo(long id) {
         Reader reader = readerRepository.getReaderById(id);
         if (reader == null) {
-            throw new NoSuchElementException("Читатель с id: " + id + " не найден");
+            throw new NoSuchElementException("Не найден читатель с id: \"" + id + "\"");
         }
         return reader;
     }
@@ -39,7 +39,7 @@ public class ReaderService {
     public Reader deleteReader(long id) {
         Reader reader = readerRepository.getReaderById(id);
         if (reader == null) {
-            throw new NoSuchElementException("Читатель с id: " + id + " не найден");
+            throw new NoSuchElementException("Не найден читатель с id: \"" + id + "\"");
         }
         readerRepository.deleteReader(reader);
         return reader;

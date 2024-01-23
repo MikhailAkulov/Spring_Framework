@@ -15,12 +15,13 @@ public class Issue {
     private final long id;
     private final long bookId;
     private final long readerId;
-    private final LocalDateTime timestamp; //   Дата выдачи
+    private final LocalDateTime issued_at;  //  Дата выдачи
+    private LocalDateTime returned_at;      //  Дата возврата
 
     public Issue(long bookId, long readerId) {
         this.id = sequence++;
         this.bookId = bookId;
         this.readerId = readerId;
-        this.timestamp = LocalDateTime.now();
+        this.issued_at = LocalDateTime.now();
     }
 }
