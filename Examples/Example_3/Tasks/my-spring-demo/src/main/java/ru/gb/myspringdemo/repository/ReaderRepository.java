@@ -37,14 +37,18 @@ public class ReaderRepository {
                 .orElse(null);
     }
 
+    public Reader getReaderByName(String name) {
+        return readers.stream()
+                .filter(it -> Objects.equals(it.getName(), name))
+                .findFirst()
+                .orElse(null);
+    }
+
     public void addReader(Reader reader) {
         readers.add(reader);
     }
 
-    public void deleteReaderById(long id) {
-        readers.stream()
-                .filter(it -> Objects.equals(it.getId(), id))
-                .findFirst()
-                .ifPresent(readers::remove);
+    public void deleteReader(Reader reader) {
+        readers.remove(reader);
     }
 }

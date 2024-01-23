@@ -20,15 +20,17 @@ public class BookController {
     private BookService bookService;
 
     // GET  /book - получить список всех книг
-//    @GetMapping()
-//    public List<Book> getBooks() {
-//        return bookService.getAll();
-//    }
+    @GetMapping()
+    public ResponseEntity<List<Book>> getAllBooks() {
+        log.info("Получен запрос актуального списка книг");
+
+        return new ResponseEntity<>(bookService.showAllBooks(), HttpStatus.OK);
+    }
 
     //  GET /book/{id} - получить описание книги
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBookInfo(@PathVariable long id) {
-        log.info("Получен запрос на добавление книги: Id = {}", id);
+        log.info("Получен запрос информации о книге: Id = {}", id);
 
         final Book book;
         try {
@@ -67,5 +69,3 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(book);
     }
 }
-
-

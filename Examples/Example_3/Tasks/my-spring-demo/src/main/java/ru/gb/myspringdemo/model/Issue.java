@@ -1,7 +1,6 @@
 package ru.gb.myspringdemo.model;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 

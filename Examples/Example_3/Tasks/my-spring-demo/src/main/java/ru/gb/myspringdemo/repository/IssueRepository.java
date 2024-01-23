@@ -2,7 +2,6 @@ package ru.gb.myspringdemo.repository;
 
 import org.springframework.stereotype.Repository;
 import ru.gb.myspringdemo.model.Issue;
-import ru.gb.myspringdemo.model.Reader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,5 +25,9 @@ public class IssueRepository {
                 .filter(it -> Objects.equals(it.getId(), id))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public List<Issue> showIssueList() {
+        return List.copyOf(issues);
     }
 }

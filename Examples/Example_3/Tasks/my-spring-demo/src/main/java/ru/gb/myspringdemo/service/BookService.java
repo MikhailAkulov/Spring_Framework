@@ -6,6 +6,7 @@ import ru.gb.myspringdemo.api.BookRequest;
 import ru.gb.myspringdemo.model.Book;
 import ru.gb.myspringdemo.repository.BookRepository;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -13,6 +14,10 @@ import java.util.NoSuchElementException;
 public class BookService {
 
     private final BookRepository bookRepository;
+
+    public List<Book> showAllBooks() {
+        return bookRepository.getAll();
+    }
 
     public Book addNewBook(BookRequest request) {
         // TODO: необходимо продумать момент с дублирующимися книгами, добавить counter для учёта количества экземпляров

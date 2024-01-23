@@ -26,9 +26,9 @@ public class BookRepository {
         ));
     }
 
-//    public List<Book> getAll() {
-//        return List.copyOf(books);
-//    }
+    public List<Book> getAll() {
+        return List.copyOf(books);
+    }
 
     public Book getBookById(long id) {
         return books.stream()
