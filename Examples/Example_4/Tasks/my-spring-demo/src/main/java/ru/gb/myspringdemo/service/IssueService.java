@@ -41,14 +41,14 @@ public class IssueService {
                 .filter(it -> it.getReaderId() == request.getReaderId())
                 .filter(it -> it.getReturned_at() != null)
                 .count();
-        System.out.println("Issued books: " + readerIssuedBooksAmount);
-        System.out.println("Returned books: " + readerReturnedBooksAmount);
-        if (readerIssuedBooksAmount - readerReturnedBooksAmount> booksLimit) {
-            throw new RuntimeException("Максимально разрешенное количество книг на руках у читателя с id: \"" + request.getReaderId() + "\"");
-        }
 
         Issue issue = new Issue(request.getBookId(), request.getReaderId());
-        issueRepository.save(issue);
+        if (readerIssuedBooksAmount - readerReturnedBooksAmount < booksLimit) {
+            issueRepository.save(issue);
+        } else {
+            issueRepository.deleteIssue(issue);
+            throw new RuntimeException("Максимально разрешенное количество книг на руках у читателя с id: \"" + request.getReaderId() + "\"");
+        }
         return issue;
     }
 
