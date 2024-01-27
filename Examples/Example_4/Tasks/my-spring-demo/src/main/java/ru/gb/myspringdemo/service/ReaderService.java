@@ -44,4 +44,8 @@ public class ReaderService {
         readerRepository.deleteReader(reader);
         return reader;
     }
+
+    public Reader getReaderById(long id) {
+        return readerRepository.getReaderById(id);
+    }
 }

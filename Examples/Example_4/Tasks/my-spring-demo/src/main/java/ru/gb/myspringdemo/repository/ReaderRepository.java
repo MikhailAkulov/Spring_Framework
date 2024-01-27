@@ -22,7 +22,9 @@ public class ReaderRepository {
         readers.addAll(List.of(
                 new Reader("Читатель1"),
                 new Reader("Читатель2"),
-                new Reader("Читатель3")
+                new Reader("Читатель3"),
+                new Reader("Читатель4"),
+                new Reader("Читатель5")
         ));
     }
 

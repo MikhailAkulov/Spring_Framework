@@ -47,6 +47,7 @@ public class IssueService {
             issueRepository.save(issue);
         } else {
             issueRepository.deleteIssue(issue);
+            Issue.sequence--;
             throw new RuntimeException("Максимально разрешенное количество книг на руках у читателя с id: \"" + request.getReaderId() + "\"");
         }
         return issue;
