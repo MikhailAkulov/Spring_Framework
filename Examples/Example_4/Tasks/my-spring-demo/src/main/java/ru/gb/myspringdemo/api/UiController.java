@@ -20,16 +20,12 @@ import java.util.List;
 @RequestMapping("/ui")
 public class UiController {
 
-    private BookService bookService;
-    private ReaderService readerService;
-    private IssueService issueService;
-
     @Autowired
-    public UiController(BookService bookService, ReaderService readerService, IssueService issueService) {
-        this.bookService = bookService;
-        this.readerService = readerService;
-        this.issueService = issueService;
-    }
+    private BookService bookService;
+    @Autowired
+    private ReaderService readerService;
+    @Autowired
+    private IssueService issueService;
 
     //  должен выводить домашнюю страницу библиотеки
     @GetMapping
@@ -63,9 +59,16 @@ public class UiController {
     //  у этого читателя
     @GetMapping("/reader/{id}")
     public String getIssuesByReaderId(@PathVariable long id, Model model) {
-        Reader reader = readerService.getReaderById(id);
+        Reader reader = readerService.showReaderInfo(id);
+        List<Issue> issues = issueService.getAllIssuesByReader(id);
+        List<Book> books = new ArrayList<>();
+        for (Issue issue : issues) {
+            books.add(bookService.showBookInfo(issue.getBookId()));
+        }
+        model.addAttribute("books", books);
         model.addAttribute("reader", reader);
-        model.addAttribute("issues", issueService.showAllIssues());
+        model.addAttribute("issue", issues);
         return "booksByReader";
     }
+
 }

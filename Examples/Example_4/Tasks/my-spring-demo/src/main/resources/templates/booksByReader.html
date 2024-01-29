@@ -11,12 +11,10 @@
     <h1>Reader's list of books</h1>
     <h2>Reader id: <span th:text="${reader.getId()}"></span>; Reader name: <span th:text="${reader.getName()}"></span></h2>
     <ul>
-        <li th:each="issue : ${issues}">
-            <p>Book id: <span th:text="${issue.getBookId()}"></span>;
-                Issued at: <span th:text="${issue.getIssued_at()}"></span>;
-                Returned at: <span th:text="${issue.getReturned_at()}"></span></p>
+        <li th:each="book : ${books}">
+            <p>Book id: <span th:text="${book.getId()}"></span>;
+                Book title: <span th:text="${book.getName()}"></span></p>
         </li>
     </ul>
-
 </body>
 </html>
