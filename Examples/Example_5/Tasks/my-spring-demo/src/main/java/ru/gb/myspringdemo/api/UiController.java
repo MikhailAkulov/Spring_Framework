@@ -20,12 +20,16 @@ import java.util.List;
 @RequestMapping("/ui")
 public class UiController {
 
+    private final BookService bookService;
+    private final ReaderService readerService;
+    private final IssueService issueService;
+
     @Autowired
-    private BookService bookService;
-    @Autowired
-    private ReaderService readerService;
-    @Autowired
-    private IssueService issueService;
+    public UiController(BookService bookService, ReaderService readerService, IssueService issueService) {
+        this.bookService = bookService;
+        this.readerService = readerService;
+        this.issueService = issueService;
+    }
 
     //  должен выводить домашнюю страницу библиотеки
     @GetMapping
@@ -55,8 +59,7 @@ public class UiController {
         return "issues";
     }
 
-    //  /ui/reader/{id} - страница, где написано имя читателя с идентификатором id и перечислены книги, которые на руках
-    //  у этого читателя
+    //  /ui/reader/{id} - страница, где написано имя читателя с идентификатором id и перечислены книги
     @GetMapping("/reader/{id}")
     public String getIssuesByReaderId(@PathVariable long id, Model model) {
         Reader reader = readerService.showReaderInfo(id);

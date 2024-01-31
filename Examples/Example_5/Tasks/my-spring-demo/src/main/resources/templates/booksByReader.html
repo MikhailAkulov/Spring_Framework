@@ -10,14 +10,27 @@
 <body>
     <h1>Reader's list of books</h1>
     <h2>Reader id: <span th:text="${reader.getId()}"></span>; Reader name: <span th:text="${reader.getName()}"></span></h2>
-    <ol>
+    <ul>
         <li th:each="book:${books}">
-            <p th:each="issue:${issues}">
+            <p>
                 Book id: <span th:text="${book.getId()}"></span>;
-                Book title: <span th:text="${book.getName()}"></span>;
-                Issued at: <span th:text="${issue.getIssued_at()}"></span>;
-                Returned at: <span th:text="${issue.getReturned_at()}"></span></p>
+                Book title: <span th:text="${book.getName()}"></span>
+            </p>
         </li>
-    </ol>
+    </ul>
+    <table>
+        <tr>
+            <td>Issuance_id</td>
+            <td>Book_id</td>
+            <td>Issued_at</td>
+            <td>Returned_at</td>
+        </tr>
+        <tr th:each="issue:${issues}">
+            <td th:text="${issue.getId()}"></td>
+            <td th:text="${issue.getBookId()}"></td>
+            <td th:text="${issue.getIssued_at()}"></td>
+            <td th:text="${issue.getReturned_at()}"></td>
+        </tr>
+    </table>
 </body>
 </html>
