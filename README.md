@@ -9,3 +9,5 @@
 [Spring MVC. Использование шаблонизатора Thymeleaf](https://github.com/MikhailAkulov/Spring_Framework/tree/main/Examples/Example_4)
 
 [Spring Data для работы с базами данных](https://github.com/MikhailAkulov/Spring_Framework/tree/main/Examples/Example_5)
+
+[Проектирование и реализация API для серверного приложения](https://github.com/MikhailAkulov/Spring_Framework/tree/main/Examples/Example_6)
