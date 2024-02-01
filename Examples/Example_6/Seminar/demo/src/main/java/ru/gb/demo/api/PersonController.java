@@ -21,7 +21,7 @@ public class PersonController {
   private final PersonRepository repository;
 
   @RequestMapping(method = RequestMethod.GET)
-  @Operation(summary = "get all persons", description = "Загружает всех пользоватлеей, которые есть в системе")
+  @Operation(summary = "get all persons", description = "Загружает всех пользователей, которые есть в системе")
   public ResponseEntity<List<Person>> getAll() {
     return ResponseEntity.ok(repository.findAll());
   }
