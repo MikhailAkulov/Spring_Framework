@@ -1,5 +1,7 @@
 package ru.gb.myspringdemo.api;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,49 +20,52 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/ui")
+@Tag(name = "UI")
 public class UiController {
 
-    private final BookService bookService;
-    private final ReaderService readerService;
-    private final IssueService issueService;
-
     @Autowired
-    public UiController(BookService bookService, ReaderService readerService, IssueService issueService) {
-        this.bookService = bookService;
-        this.readerService = readerService;
-        this.issueService = issueService;
-    }
+    private BookService bookService;
+    @Autowired
+    private ReaderService readerService;
+    @Autowired
+    private IssueService issueService;
 
-    //  должен выводить домашнюю страницу библиотеки
+    // GET  /ui
     @GetMapping
+    @Operation(summary = "go home", description = "Загружает домашнюю страницу в браузере")
     public String home() {
         return "home";
     }
 
-    //  /ui/books - на странице должен отобразиться список всех доступных книг в системе
+    // GET  /ui/books
     @GetMapping("/books")
+    @Operation(summary = "get list of all books", description = "Загружает страницу со списком книг, внесённых в систему")
     public String getBooks(Model model) {
         model.addAttribute("books", bookService.showAllBooks());
         return "books";
     }
 
-    //  /ui/reader - на странице должен отобразиться список всех читателей в системе
+    // GET  /ui/reader
     @GetMapping("/readers")
+    @Operation(summary = "get list of all readers", description = "Загружает страницу со списком читателей, зарегистрированных в системе")
     public String getReaders(Model model) {
         model.addAttribute("readers", readerService.showAllReaders());
         return "readers";
     }
 
-    //  /ui/issues - на странице отображается таблица, в которой есть столбцы (книга, читатель, когда взял, когда вернул
-    //  (если не вернул - пустая ячейка)).
+    // GET  /ui/issues
     @GetMapping("/issues")
+    @Operation(summary = "get table about all book issuance's", description = "Загружает страницу с таблицей " +
+            "с информацией о всех выдачах книг читателям")
     public String getIssues(Model model) {
         model.addAttribute("issues", issueService.showAllIssues());
         return "issues";
     }
 
-    //  /ui/reader/{id} - страница, где написано имя читателя с идентификатором id и перечислены книги
+    // GET  /ui/reader/{id} - страница, где написано имя читателя с идентификатором id и перечислены книги
     @GetMapping("/reader/{id}")
+    @Operation(summary = "get issuance list by reader", description = "Загружает страницу со списком всех книг, " +
+            "когда-либо выданных читателю")
     public String getIssuesByReaderId(@PathVariable long id, Model model) {
         Reader reader = readerService.showReaderInfo(id);
         List<Issue> issues = issueService.getAllIssuesByReader(id);

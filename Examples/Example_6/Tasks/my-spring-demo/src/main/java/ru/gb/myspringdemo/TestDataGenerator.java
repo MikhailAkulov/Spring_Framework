@@ -1,8 +1,7 @@
 package ru.gb.myspringdemo;
 
 import jakarta.annotation.PostConstruct;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
 import ru.gb.myspringdemo.model.Book;
 import ru.gb.myspringdemo.model.Issue;
 import ru.gb.myspringdemo.model.Reader;
@@ -10,7 +9,7 @@ import ru.gb.myspringdemo.repository.BookRepository;
 import ru.gb.myspringdemo.repository.IssueRepository;
 import ru.gb.myspringdemo.repository.ReaderRepository;
 
-@RestController
+@Component
 public class TestDataGenerator {
 
     private final BookRepository bookRepository;
