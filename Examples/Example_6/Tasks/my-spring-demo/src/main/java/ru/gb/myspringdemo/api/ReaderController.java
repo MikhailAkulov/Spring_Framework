@@ -1,6 +1,7 @@
 package ru.gb.myspringdemo.api;
 
-import jakarta.annotation.PostConstruct;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.myspringdemo.model.Issue;
 import ru.gb.myspringdemo.model.Reader;
-import ru.gb.myspringdemo.repository.ReaderRepository;
 import ru.gb.myspringdemo.service.IssueService;
 import ru.gb.myspringdemo.service.ReaderService;
 
@@ -18,29 +18,26 @@ import java.util.NoSuchElementException;
 @Slf4j
 @RestController
 @RequestMapping("/reader")
+@Tag(name = "Reader")
 public class ReaderController {
-
-    private final ReaderRepository readerRepository;
 
     @Autowired
     private ReaderService readerService;
     @Autowired
     private IssueService issueService;
 
-    public ReaderController(ReaderRepository readerRepository) {
-        this.readerRepository = readerRepository;
-    }
-
-    // GET  /reader - получить список всех читателей
+    // GET  /reader
     @GetMapping()
+    @Operation(summary = "get all readers", description = "Загружает список читателей, зарегистрированных в системе")
     public ResponseEntity<List<Reader>> getAllReaders() {
         log.info("Получен запрос актуального списка читателей");
 
         return new ResponseEntity<>(readerService.showAllReaders(), HttpStatus.OK);
     }
 
-    //  GET /reader/{id} - получить описание читателя
+    //  GET /reader/{id}
     @GetMapping("/{id}")
+    @Operation(summary = "get info about reader", description = "Загружает информацию о запрашиваемом читателе")
     public ResponseEntity<Reader> getReaderInfo(@PathVariable long id) {
         log.info("Получен запрос информации о читателе: Id = {}", id);
 
@@ -53,8 +50,9 @@ public class ReaderController {
         return ResponseEntity.status(HttpStatus.OK).body(reader);
     }
 
-    //  DELETE /reader/{id} - удалить читателя
+    //  DELETE /reader/{id}
     @DeleteMapping("/{id}")
+    @Operation(summary = "delete reader", description = "Удаляет читателя из системы по Id")
     public ResponseEntity<Reader> deleteReader(@PathVariable long id) {
         log.info("Получен запрос на удаление читателя: Id = {}", id);
 
@@ -67,8 +65,9 @@ public class ReaderController {
         return ResponseEntity.status(HttpStatus.OK).body(reader);
     }
 
-    //  POST /reader - создать читателя
+    //  POST /reader
     @PostMapping()
+    @Operation(summary = "add new reader", description = "Добавляет нового читателя в систему")
     public ResponseEntity<Reader> addNewReader(@RequestBody ReaderRequest request) {
         log.info("Получен запрос на добавление читателя: name = {}", request.getName());
 
@@ -81,7 +80,9 @@ public class ReaderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(reader);
     }
 
+    //  GET /reader/{id}/issue
     @GetMapping("/{id}/issue")
+    @Operation(summary = "get all issuance by reader", description = "Загружает список выдач книг читателя")
     public ResponseEntity<List<Issue>> getReaderIssues(@PathVariable long id) {
         log.info("Получен запрос информации о выдачах читателя с id = {}", id);
 
@@ -92,14 +93,5 @@ public class ReaderController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.status(HttpStatus.OK).body(readersIssues);
-    }
-
-    @PostConstruct
-    public void generateData() {
-        readerRepository.save(new Reader("Читатель1"));
-        readerRepository.save(new Reader("Читатель2"));
-        readerRepository.save(new Reader("Читатель3"));
-        readerRepository.save(new Reader("Читатель4"));
-        readerRepository.save(new Reader("Читатель5"));
     }
 }

@@ -1,5 +1,6 @@
 package ru.gb.myspringdemo.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -18,24 +19,30 @@ import java.time.LocalDateTime;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
+@Schema(name = "Выдача")
 public class Issue {
 
     public static long sequence = 1L;
 
     @Id
+    @Schema(name = "Идентификатор выдачи")
     private final long id;
 
     @Column(name = "book_id")
+    @Schema(name = "Идентификатор книги")
     private final long bookId;
 
     @Column(name = "reader_id")
+    @Schema(name = "Идентификатор читателя")
     private final long readerId;
 
     @Column(name = "issued_at")
-    private final LocalDateTime issued_at;  //  Дата выдачи
+    @Schema(name = "Дата выдачи")
+    private final LocalDateTime issued_at;
 
     @Column(name = "returned_at")
-    private LocalDateTime returned_at;      //  Дата возврата
+    @Schema(name = "Дата возврата")
+    private LocalDateTime returned_at;
 
     public Issue(long bookId, long readerId) {
         this.id = sequence++;

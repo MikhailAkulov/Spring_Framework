@@ -1,13 +1,13 @@
 package ru.gb.myspringdemo.api;
 
-import jakarta.annotation.PostConstruct;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.myspringdemo.model.Book;
-import ru.gb.myspringdemo.repository.BookRepository;
 import ru.gb.myspringdemo.service.BookService;
 
 import java.util.List;
@@ -16,27 +16,24 @@ import java.util.NoSuchElementException;
 @Slf4j
 @RestController
 @RequestMapping("/book")
+@Tag(name = "Book")
 public class BookController {
-
-    private final BookRepository bookRepository;
 
     @Autowired
     private BookService bookService;
 
-    public BookController(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
-
-    // GET  /book - получить список всех книг
+    // GET  /book
     @GetMapping()
+    @Operation(summary = "get all books", description = "Загружает список книг, внесённых в систему")
     public ResponseEntity<List<Book>> getAllBooks() {
         log.info("Получен запрос актуального списка книг");
 
         return new ResponseEntity<>(bookService.showAllBooks(), HttpStatus.OK);
     }
 
-    //  GET /book/{id} - получить описание книги
+    //  GET /book/{id}
     @GetMapping("/{id}")
+    @Operation(summary = "get info about book", description = "Загружает информацию о запрашиваемой книге")
     public ResponseEntity<Book> getBookInfo(@PathVariable long id) {
         log.info("Получен запрос информации о книге: Id = {}", id);
 
@@ -49,8 +46,9 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body(book);
     }
 
-    //  DELETE /book/{id} - удалить книгу
+    //  DELETE /book/{id}
     @DeleteMapping("/{id}")
+    @Operation(summary = "delete book", description = "Удаляет книгу из системы по Id")
     public ResponseEntity<Book> deleteBook(@PathVariable long id) {
         log.info("Получен запрос на удаление книги: Id = {}", id);
 
@@ -63,8 +61,9 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body(book);
     }
 
-    //  POST /book - создать книгу
+    //  POST /book
     @PostMapping
+    @Operation(summary = "add new book", description = "Добавляет новую книгу в систему")
     public ResponseEntity<Book> addNewBook(@RequestBody BookRequest request) {
         log.info("Получен запрос на добавление книги: name = {}", request.getName());
 
@@ -75,14 +74,5 @@ public class BookController {
             return ResponseEntity.unprocessableEntity().build();
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(book);
-    }
-
-    @PostConstruct
-    public void generateData() {
-        bookRepository.save(new Book("Война и мир"));
-        bookRepository.save(new Book("Мертвые души"));
-        bookRepository.save(new Book("Чистый код"));
-        bookRepository.save(new Book("Зов Ктулху"));
-        bookRepository.save(new Book("Атлант расправил плечи"));
     }
 }
