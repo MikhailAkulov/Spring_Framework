@@ -13,11 +13,11 @@ public class SecurityConfiguration {
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .authorizeHttpRequests(registry -> registry
-                        .requestMatchers("/issue/**").hasAuthority("admin")
-                        .requestMatchers("/reader/**").hasAuthority("reader")
-                        .requestMatchers("/book/**").authenticated()
+                        .requestMatchers("/ui/issues/**").hasAuthority("admin")
+                        .requestMatchers("/ui/readers/**").hasAuthority("reader")
+                        .requestMatchers("/ui/books/**").authenticated()
                         .requestMatchers("/ui/**").permitAll()
-                        .anyRequest().denyAll()
+                        .anyRequest().permitAll()
                 ).formLogin(Customizer.withDefaults())
                 .build();
     }
