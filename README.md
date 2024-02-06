@@ -13,3 +13,5 @@
 6. [Проектирование и реализация API для серверного приложения](https://github.com/MikhailAkulov/Spring_Framework/tree/main/Examples/Example_6)
 
 7. [Spring Security. Работа с JWT. Защита от основных видов атак](https://github.com/MikhailAkulov/Spring_Framework/tree/main/Examples/Example_7)
+
+8. [Spring AOP, управление транзакциями](https://github.com/MikhailAkulov/Spring_Framework/tree/main/Examples/Example_8)
