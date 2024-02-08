@@ -9,7 +9,7 @@ import ru.gb.demo.MyServiceBean;
 //@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class SpringAopDemoApplication {
 
-	// OOP (Object oriented programing)
+	// OOP (Object oriented programming)
 	// AOP (Aspect oriented programming)
 
 	// CGLib extends MyServiceBean
