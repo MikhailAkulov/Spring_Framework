@@ -2,7 +2,6 @@ package ru.gb.myspringdemo;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
-import ru.gb.myspringdemo.aspect.Timer;
 import ru.gb.myspringdemo.model.Book;
 import ru.gb.myspringdemo.model.Issue;
 import ru.gb.myspringdemo.model.Reader;

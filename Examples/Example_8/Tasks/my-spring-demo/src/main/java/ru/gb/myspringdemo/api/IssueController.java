@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.gb.myspringdemo.aspect.Timer;
 import ru.gb.myspringdemo.model.Issue;
 import ru.gb.myspringdemo.service.IssueService;
 
@@ -40,6 +41,7 @@ public class IssueController {
     }
 
     //  GET /issue/{id}
+    @Timer
     @GetMapping("/{id}")
     @Operation(summary = "get issuance information", description = "Загружает информацию о конкретной выдаче книги читателю")
     public ResponseEntity<Issue> getIssueInfo(@PathVariable long id) {
@@ -55,6 +57,7 @@ public class IssueController {
     }
 
     //  GET /issue
+    @Timer
     @GetMapping
     @Operation(summary = "get information about all book issues", description = "Загружает информацию о всех выдачах книг читателям")
     public ResponseEntity<List<Issue>> getAllIssues() {

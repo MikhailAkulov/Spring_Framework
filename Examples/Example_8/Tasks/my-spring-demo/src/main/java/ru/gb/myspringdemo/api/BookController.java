@@ -50,7 +50,6 @@ public class BookController {
     }
 
     //  DELETE /book/{id}
-    @Timer
     @DeleteMapping("/{id}")
     @Operation(summary = "delete book", description = "Удаляет книгу из системы по Id")
     public ResponseEntity<Book> deleteBook(@PathVariable long id) {
@@ -66,7 +65,6 @@ public class BookController {
     }
 
     //  POST /book
-    @Timer
     @PostMapping
     @Operation(summary = "add new book", description = "Добавляет новую книгу в систему")
     public ResponseEntity<Book> addNewBook(@RequestBody BookRequest request) {

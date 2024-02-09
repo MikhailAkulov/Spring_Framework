@@ -28,7 +28,7 @@ public class TimerAspect {
             long start = System.currentTimeMillis();
             Object result = joinPoint.proceed();
             long elapsedTime = System.currentTimeMillis() - start;
-            //  className - methodName #(количество секунд выполнения)
+            //  в лог записать следующее: className - methodName #(количество секунд выполнения)
             log.info(joinPoint.getTarget().getClass().getName() + " - " + joinPoint.getSignature().getName() + " #" +
                     elapsedTime * 0.001 + " sec.");
             return result;

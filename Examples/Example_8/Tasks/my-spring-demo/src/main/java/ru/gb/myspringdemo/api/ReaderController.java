@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.gb.myspringdemo.aspect.Timer;
 import ru.gb.myspringdemo.model.Issue;
 import ru.gb.myspringdemo.model.Reader;
 import ru.gb.myspringdemo.service.IssueService;
@@ -27,6 +28,7 @@ public class ReaderController {
     private IssueService issueService;
 
     // GET  /reader
+    @Timer
     @GetMapping()
     @Operation(summary = "get all readers", description = "Загружает список читателей, зарегистрированных в системе")
     public ResponseEntity<List<Reader>> getAllReaders() {
@@ -36,6 +38,7 @@ public class ReaderController {
     }
 
     //  GET /reader/{id}
+    @Timer
     @GetMapping("/{id}")
     @Operation(summary = "get info about reader", description = "Загружает информацию о запрашиваемом читателе")
     public ResponseEntity<Reader> getReaderInfo(@PathVariable long id) {
@@ -81,6 +84,7 @@ public class ReaderController {
     }
 
     //  GET /reader/{id}/issue
+    @Timer
     @GetMapping("/{id}/issue")
     @Operation(summary = "get all issuance by reader", description = "Загружает список выдач книг читателя")
     public ResponseEntity<List<Issue>> getReaderIssues(@PathVariable long id) {
