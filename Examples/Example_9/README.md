@@ -21,6 +21,8 @@
 4. Взаимодействие через WebClient
 5. Теория про Feign
 
+Полезное про [Алгоритмы балансировки нагрузок](https://habr.com/ru/companies/ruvds/articles/732648/)
+
 [Директория семинара](https://github.com/MikhailAkulov/Spring_Framework/tree/main/Examples/Example_9/Seminar)
 
 ## Задания:
