@@ -17,3 +17,5 @@
 8. [Spring AOP, управление транзакциями](https://github.com/MikhailAkulov/Spring_Framework/tree/main/Examples/Example_8)
 
 9. [Spring Cloud. Микросервисная архитектура](https://github.com/MikhailAkulov/Spring_Framework/tree/main/Examples/Example_9)
+
+10. [Spring Testing. JUnit и Mockito для написания тестов](https://github.com/MikhailAkulov/Spring_Framework/tree/main/Examples/Example_10)
