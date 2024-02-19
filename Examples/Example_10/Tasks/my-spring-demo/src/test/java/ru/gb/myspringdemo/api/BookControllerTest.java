@@ -6,19 +6,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.web.reactive.server.StatusAssertions;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.client.HttpClientErrorException;
 import ru.gb.myspringdemo.JUnitSpringBootBase;
 import ru.gb.myspringdemo.model.Book;
 import ru.gb.myspringdemo.repository.BookRepository;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 class BookControllerTest extends JUnitSpringBootBase {
 
@@ -88,11 +83,11 @@ class BookControllerTest extends JUnitSpringBootBase {
     void testFindByIdNotFound() {
         bookRepository.save(new Book(1L, "Book_1"));
 
-        Long maxId = jdbcTemplate.queryForObject("select max(id) from books", Long.class);
-        maxId++;
+        Long nonExisting = jdbcTemplate.queryForObject("select max(id) from books", Long.class);
+        nonExisting++;
 
         webTestClient.get()
-                .uri("/book/" + maxId)
+                .uri("/book/" + nonExisting)
                 .exchange()
                 .expectStatus().isNotFound();
     }
@@ -117,15 +112,26 @@ class BookControllerTest extends JUnitSpringBootBase {
     }
 
     @Test
+    void testSaveBookFail() {
+        webTestClient.post()
+                .uri("/book")
+                .bodyValue(bookRepository.save(new Book()))
+                .exchange()
+                .expectStatus().is4xxClientError()
+                .expectBody(IllegalArgumentException.class);
+    }
+
+    @Test
     void testDeleteBookSuccess() {
         bookRepository.saveAll(List.of(
                 new Book(1L, "Book_1"),
                 new Book(2L, "Book_2")
         ));
+
         Long deletedId = jdbcTemplate.queryForObject("select max(id) from books", Long.class);
 
         webTestClient.delete()
-                .uri("/book/ " + deletedId)
+                .uri("/book/" + deletedId)
                 .exchange()
                 .expectStatus().isOk();
 
@@ -138,11 +144,11 @@ class BookControllerTest extends JUnitSpringBootBase {
                 new Book(1L, "Book_1"),
                 new Book(2L, "Book_2")
         ));
-        Long maxId = jdbcTemplate.queryForObject("select max(id) from books", Long.class);
-        maxId++;
+        Long nonExisting = jdbcTemplate.queryForObject("select max(id) from books", Long.class);
+        nonExisting++;
 
         webTestClient.delete()
-                .uri("/book/ " + maxId)
+                .uri("/book/" + nonExisting)
                 .exchange()
                 .expectStatus().isNotFound();
     }
