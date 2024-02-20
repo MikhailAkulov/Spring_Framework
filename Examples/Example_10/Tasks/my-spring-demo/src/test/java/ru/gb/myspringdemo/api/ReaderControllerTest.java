@@ -4,15 +4,21 @@ import lombok.Data;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import ru.gb.myspringdemo.JUnitSpringBootBase;
+import ru.gb.myspringdemo.model.Issue;
 import ru.gb.myspringdemo.model.Reader;
 import ru.gb.myspringdemo.repository.ReaderRepository;
+import ru.gb.myspringdemo.service.IssueService;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 class ReaderControllerTest extends JUnitSpringBootBase {
@@ -23,6 +29,9 @@ class ReaderControllerTest extends JUnitSpringBootBase {
     ReaderRepository readerRepository;
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @MockBean
+    private IssueService issueService;
 
     @Data
     static class JUnitReaderResponse {
@@ -149,6 +158,48 @@ class ReaderControllerTest extends JUnitSpringBootBase {
 
         webTestClient.delete()
                 .uri("/reader/" + nonExisting)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testGetReaderIssuesSuccess() {
+        Reader reader = readerRepository.save(new Reader(1L, "Reader_1"));
+        List<Issue> issueList = List.of(
+                new Issue(1L, 1L, 1L, LocalDateTime.now()),
+                new Issue(2L, 2L, 1L, LocalDateTime.now())
+        );
+
+        Mockito.when(issueService.getAllIssuesByReader(reader.getId())).thenReturn(issueList);
+
+        List<Issue> responseBody = webTestClient.get()
+                .uri("/reader/" + reader.getId() + "/issue")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(new ParameterizedTypeReference<List<Issue>>() {})
+                .returnResult().getResponseBody();
+
+        Assertions.assertNotNull(responseBody);
+        Assertions.assertEquals(issueList.size(), responseBody.size());
+        for (Issue issue : issueList) {
+            Assertions.assertEquals(reader.getId(), issue.getReaderId());
+        }
+    }
+
+    @Test
+    void testGetReaderIssuesNotFound() {
+        readerRepository.saveAll(List.of(
+                new Reader(1L, "Reader_1"),
+                new Reader(2L, "Reader_2")
+        ));
+
+        Long nonExisting = jdbcTemplate.queryForObject("select max(id) from readers", Long.class);
+        nonExisting++;
+
+        Mockito.when(issueService.getAllIssuesByReader(nonExisting)).thenThrow(NoSuchElementException.class);
+
+        webTestClient.get()
+                .uri("/reader/" + nonExisting + "/issue")
                 .exchange()
                 .expectStatus().isNotFound();
     }

@@ -37,7 +37,7 @@ public class IssueController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(issue);
+        return ResponseEntity.status(HttpStatus.CREATED).body(issue);
     }
 
     //  GET /issue/{id}
