@@ -34,7 +34,8 @@ public class ReaderController {
     @GetMapping
     @Timer
     public List<Reader> getAll() {
-        return List.copyOf(readers);
+//        return List.copyOf(readers);
+        return readers;
     }
 
     @GetMapping("/random")

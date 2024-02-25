@@ -40,11 +40,12 @@ public class BookController {
     @GetMapping
     @Timer
     public List<Book> getAll() {
-        return List.copyOf(books);
+//        return List.copyOf(books);
+        return books;
     }
 
-    @Timer
     @GetMapping("/random")
+    @Timer
     public Book getRandom() {
         final  int randomIndex = faker.number().numberBetween(0, books.size());
         return books.get(randomIndex);

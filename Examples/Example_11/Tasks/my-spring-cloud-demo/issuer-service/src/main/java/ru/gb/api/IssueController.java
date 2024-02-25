@@ -31,14 +31,16 @@ public class IssueController {
     @GetMapping
     @Timer
     public List<Issue> getAll() {
-        return List.copyOf(issues);
+//        return List.copyOf(issues);
+        return issues;
     }
 
     @GetMapping("/refresh")
     @Timer
     public List<Issue> refresh() {
         refreshData();
-        return List.copyOf(issues);
+//        return List.copyOf(issues);
+        return issues;
     }
 
     private void refreshData() {
