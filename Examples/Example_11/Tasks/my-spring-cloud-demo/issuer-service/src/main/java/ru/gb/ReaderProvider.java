@@ -3,10 +3,11 @@ package ru.gb;
 import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import ru.gb.api.Book;
 import ru.gb.api.Reader;
+import ru.gb.timer.Timer;
 
 @Service
+@Timer
 public class ReaderProvider {
 
     private final WebClient webClient;

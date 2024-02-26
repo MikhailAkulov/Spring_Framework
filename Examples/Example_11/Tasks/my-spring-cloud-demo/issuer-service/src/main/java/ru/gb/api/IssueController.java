@@ -1,6 +1,6 @@
 package ru.gb.api;
 
-import com.gb.aspect.Timer;
+import ru.gb.timer.Timer;
 import com.github.javafaker.Faker;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +13,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/issue")
+@Timer
 public class IssueController {
 
     private final Faker faker;
@@ -29,17 +30,13 @@ public class IssueController {
     }
 
     @GetMapping
-    @Timer
     public List<Issue> getAll() {
-//        return List.copyOf(issues);
         return issues;
     }
 
     @GetMapping("/refresh")
-    @Timer
     public List<Issue> refresh() {
         refreshData();
-//        return List.copyOf(issues);
         return issues;
     }
 

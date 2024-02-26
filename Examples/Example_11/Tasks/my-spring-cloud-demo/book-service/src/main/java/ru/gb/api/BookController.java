@@ -1,6 +1,6 @@
 package ru.gb.api;
 
-import com.gb.aspect.Timer;
+import ru.gb.timer.Timer;
 import com.github.javafaker.Faker;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/book")
+@Timer
 public class BookController {
 
     private final Faker faker;
@@ -38,9 +39,7 @@ public class BookController {
     }
 
     @GetMapping
-    @Timer
     public List<Book> getAll() {
-//        return List.copyOf(books);
         return books;
     }
 
@@ -50,11 +49,4 @@ public class BookController {
         final  int randomIndex = faker.number().numberBetween(0, books.size());
         return books.get(randomIndex);
     }
-
 }
-
-//http://localhost:8180/api/book
-//http://localhost:8180/api/book/random
-//http://localhost:8280/api/issue
-//http://localhost:8380/api/reader
-//http://localhost:8761/eureka/apps

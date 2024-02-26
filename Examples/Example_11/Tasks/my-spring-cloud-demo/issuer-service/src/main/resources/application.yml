@@ -7,3 +7,7 @@ eureka:
 spring:
   application:
     name: issuer-service
+application:
+  timer:
+    enabled: true
+    timer-on: true

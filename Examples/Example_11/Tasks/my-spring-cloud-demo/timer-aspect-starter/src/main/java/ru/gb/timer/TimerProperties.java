@@ -1,10 +1,10 @@
-package com.gb;
+package ru.gb.timer;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
-@ConfigurationProperties("aspect")
+@ConfigurationProperties("application.timer")
 public class TimerProperties {
 
     /**

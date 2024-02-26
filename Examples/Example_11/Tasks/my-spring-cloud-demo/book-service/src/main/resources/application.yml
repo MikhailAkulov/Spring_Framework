@@ -7,3 +7,7 @@ eureka:
 spring:
   application:
     name: book-service
+application:
+  timer:
+    enabled: true
+    timer-on: true

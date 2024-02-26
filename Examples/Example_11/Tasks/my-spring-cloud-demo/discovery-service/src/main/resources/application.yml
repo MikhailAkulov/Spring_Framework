@@ -3,3 +3,7 @@ server:
 eureka:
   client:
     register-with-eureka: false
+application:
+  timer:
+    enabled: true
+    timer-on: true

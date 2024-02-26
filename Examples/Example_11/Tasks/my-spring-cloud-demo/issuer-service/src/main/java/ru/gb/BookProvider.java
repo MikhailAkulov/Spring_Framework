@@ -4,10 +4,12 @@ import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalance
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import ru.gb.api.Book;
+import ru.gb.timer.Timer;
 
 import java.util.UUID;
 
 @Service
+@Timer
 public class BookProvider {
 
     private final WebClient webClient;

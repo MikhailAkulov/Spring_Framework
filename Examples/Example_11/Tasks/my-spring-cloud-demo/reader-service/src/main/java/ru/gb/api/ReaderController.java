@@ -1,6 +1,6 @@
 package ru.gb.api;
 
-import com.gb.aspect.Timer;
+import ru.gb.timer.Timer;
 import com.github.javafaker.Faker;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +34,6 @@ public class ReaderController {
     @GetMapping
     @Timer
     public List<Reader> getAll() {
-//        return List.copyOf(readers);
         return readers;
     }
 
