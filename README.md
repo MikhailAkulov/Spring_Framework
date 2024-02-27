@@ -22,3 +22,5 @@
 
 11. [Spring Actuator. Настройка мониторинга с Prometheus и Grafana](https://github.com/MikhailAkulov/Spring_Framework/tree/main/Examples/Example_11)
 
+12. [Паттерны проектирования и GoF паттерны в Spring приложении](https://github.com/MikhailAkulov/Spring_Framework/tree/main/Examples/Example_12)
+
