@@ -5,9 +5,11 @@
 //import ru.gb.myspringdemo.model.Book;
 //import ru.gb.myspringdemo.model.Issue;
 //import ru.gb.myspringdemo.model.Reader;
+//import ru.gb.myspringdemo.model.User;
 //import ru.gb.myspringdemo.repository.BookRepository;
 //import ru.gb.myspringdemo.repository.IssueRepository;
 //import ru.gb.myspringdemo.repository.ReaderRepository;
+//import ru.gb.myspringdemo.repository.UserRepository;
 //
 //@Component
 //public class TestDataGenerator {
@@ -15,13 +17,15 @@
 //    private final BookRepository bookRepository;
 //    private final IssueRepository issueRepository;
 //    private final ReaderRepository readerRepository;
+//    private final UserRepository userRepository;
 //
 //    static long id = 1L;
 //
-//    public TestDataGenerator(BookRepository bookRepository, IssueRepository issueRepository, ReaderRepository readerRepository) {
+//    public TestDataGenerator(BookRepository bookRepository, IssueRepository issueRepository, ReaderRepository readerRepository, UserRepository userRepository) {
 //        this.bookRepository = bookRepository;
 //        this.issueRepository = issueRepository;
 //        this.readerRepository = readerRepository;
+//        this.userRepository = userRepository;
 //    }
 //
 //    @PostConstruct
@@ -46,6 +50,22 @@
 //        issueRepository.save(new Issue(2, 4));
 //        issueRepository.save(new Issue(3, 5));
 //        issueRepository.save(new Issue(1, 5));
+//    }
+//
+//    @PostConstruct
+//    public void generateUsers() {
+//        saveUser(userRepository, "admin");
+//        saveUser(userRepository, "reader");
+//        saveUser(userRepository, "auth");
+//    }
+//
+//    public void saveUser(UserRepository userRepository, String login) {
+//        User user = new User();
+//        user.setId(id++);
+//        user.setLogin(login);
+//        user.setPassword(login);
+//        user.setRole(login);
+//        userRepository.save(user);
 //    }
 //
 //}
